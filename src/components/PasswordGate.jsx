@@ -6,14 +6,12 @@ const users = [
   {
     id: 'Rugiatu',
     label: 'Rugiatu',
-    description: 'Her corner',
     gradient: 'linear-gradient(135deg, #F9E4D8, #DCAE96)',
     dot: '#DCAE96',
   },
   {
     id: 'Rahim',
     label: 'Rahim',
-    description: 'His corner',
     gradient: 'linear-gradient(135deg, #FFF3E0, #FFD29D)',
     dot: '#FFD29D',
   },
