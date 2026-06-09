@@ -1,0 +1,26 @@
+From edb3f46b93fe6d1b18cffa702b8ec8a1da3d7b9a Mon Sep 17 00:00:00 2001
+From: Rugiatu Kargbo <kargborugiatu224@gmail.com>
+Date: Tue, 9 Jun 2026 12:50:39 +0000
+Subject: [PATCH] fix(vercel): set outputDirectory and SPA rewrite for Vercel
+ static build
+
+---
+ vercel.json | 6 ++++++
+ 1 file changed, 6 insertions(+)
+ create mode 100644 vercel.json
+
+diff --git a/vercel.json b/vercel.json
+new file mode 100644
+index 0000000..4e28baa
+--- /dev/null
++++ b/vercel.json
+@@ -0,0 +1,6 @@
++{
++  "outputDirectory": "dist",
++  "rewrites": [
++    { "source": "(/.*)", "destination": "/index.html" }
++  ]
++}
+-- 
+2.51.1.windows.1
+

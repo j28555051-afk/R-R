@@ -54,7 +54,7 @@ export default function PasswordGate({ onLogin }) {
         <div className="gate-monogram">R&R</div>
 
         <h1 className="gate-title">R &amp; R</h1>
-        <p className="gate-subtitle">A private space, just for two.</p>
+        <p className="gate-subtitle">Our private memory dump.</p>
 
         {step === 'password' ? (
           <form onSubmit={handlePasswordSubmit}>
