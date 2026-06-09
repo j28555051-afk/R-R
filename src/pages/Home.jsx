@@ -143,7 +143,9 @@ export default function Home({ currentUser }) {
             onClick={() => setFilter(f.id)}
             className={`filter-btn${filter === f.id ? ' active' : ''}`}
           >
-            {f.label}
+            {(f.id === 'rugiatu' && currentUser === 'Rugiatu') || (f.id === 'rahim' && currentUser === 'Rahim')
+              ? 'By You'
+              : f.label}
           </button>
         ))}
         <button onClick={fetchMedia} className="filter-btn" style={{ marginLeft: 'auto' }}>
