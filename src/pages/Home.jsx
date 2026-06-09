@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import MediaCard from '../components/MediaCard';
 import UploadModal from '../components/UploadModal';
 
@@ -22,6 +22,11 @@ export default function Home({ currentUser }) {
   const fetchMedia = async () => {
     setLoading(true);
     setError('');
+    if (!isSupabaseConfigured) {
+      setError('Supabase not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your environment (e.g., Vercel project settings).');
+      setLoading(false);
+      return;
+    }
     const { data: mediaItems, error: mediaErr } = await supabase
       .from('media_items')
       .select('*')
