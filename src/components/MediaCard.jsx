@@ -119,7 +119,7 @@ export default function MediaCard({ item, currentUser, onLikeToggle, onDelete })
           {/* Uploader + date */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span className="uploader-tag">
-              <span className="uploader-dot" style={{ background: item.uploader === 'Rugiatu' ? '#DCAE96' : '#FFD29D' }} />
+              <span className="uploader-dot" style={{ background: item.uploader === currentUser ? '#DCAE96' : '#FFD29D' }} />
               {item.uploader === currentUser ? 'You' : item.uploader}
             </span>
             <span style={{ fontSize: '0.75rem', color: '#B08070' }}>{formatDate(item.created_at)}</span>

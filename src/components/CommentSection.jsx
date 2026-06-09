@@ -100,7 +100,7 @@ export default function CommentSection({ mediaId, currentUser, initialComments =
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px', alignItems: 'center' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span className="uploader-dot" style={{ background: c.user_name === 'Rugiatu' ? '#DCAE96' : '#FFD29D', width: '8px', height: '8px' }} />
+                    <span className="uploader-dot" style={{ background: c.user_name === currentUser ? '#DCAE96' : '#FFD29D', width: '8px', height: '8px' }} />
                     <span style={{ fontWeight: 700, fontSize: '0.82rem', color: '#A96A4E' }}>{c.user_name === currentUser ? 'You' : c.user_name}</span>
                   </div>
                   <span style={{ fontSize: '0.72rem', color: '#B08070' }}>{formatTime(c.created_at)}</span>

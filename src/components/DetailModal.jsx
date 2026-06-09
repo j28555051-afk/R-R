@@ -137,7 +137,7 @@ export default function DetailModal({
               }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                    <span className="uploader-dot" style={{ background: item.uploader === 'Rugiatu' ? '#DCAE96' : '#FFD29D' }} />
+                    <span className="uploader-dot" style={{ background: item.uploader === currentUser ? '#DCAE96' : '#FFD29D' }} />
                     <span style={{ fontWeight: 700, color: '#A96A4E', fontSize: '0.95rem' }}>{item.uploader === currentUser ? 'You' : item.uploader}</span>
                   </div>
                   <span style={{ fontSize: '0.78rem', color: '#B08070' }}>{formatDate(item.created_at)}</span>
