@@ -4,6 +4,9 @@ import PasswordGate from './components/PasswordGate';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import ProfileModal from './components/ProfileModal';
+import { supabase } from './lib/supabase';
+import { setAvatarUrl } from './lib/avatar';
+import { useEffect } from 'react';
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(() => {
@@ -12,6 +15,18 @@ export default function App() {
   });
   const [activePage, setActivePage] = useState('home');
   const [profileUser, setProfileUser] = useState(null);
+
+  useEffect(() => {
+    if (!currentUser) return;
+    (async () => {
+      try {
+        const { data, error } = await supabase.from('user_profiles').select('avatar_url').eq('username', currentUser).single();
+        if (!error && data && data.avatar_url) {
+          setAvatarUrl(currentUser, data.avatar_url);
+        }
+      } catch (e) {}
+    })();
+  }, [currentUser]);
 
   const handleLogin = (user) => {
     setCurrentUser(user);

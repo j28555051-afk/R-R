@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { getAvatarUrl, setAvatarUrl } from '../lib/avatar';
 
@@ -29,6 +29,12 @@ export default function ProfileModal({ username, currentUser, onClose }) {
       if (storageErr) throw storageErr;
       const { data } = supabase.storage.from('memories').getPublicUrl(path);
       const publicUrl = data.publicUrl;
+      // persist server-side (if table exists)
+      try {
+        await supabase.from('user_profiles').upsert({ username, avatar_url: publicUrl });
+      } catch (e) {
+        // ignore if table not present
+      }
       setAvatarUrl(username, publicUrl);
       setPreview(null);
       onClose();
@@ -38,6 +44,22 @@ export default function ProfileModal({ username, currentUser, onClose }) {
       setUploading(false);
     }
   };
+
+  useEffect(() => {
+    // try to fetch stored avatar URL from server if not present locally
+    (async () => {
+      const local = getAvatarUrl(username);
+      if (local) return;
+      try {
+        const { data, error } = await supabase.from('user_profiles').select('avatar_url').eq('username', username).single();
+        if (!error && data && data.avatar_url) {
+          setAvatarUrl(username, data.avatar_url);
+        }
+      } catch (e) {
+        // ignore
+      }
+    })();
+  }, [username]);
 
   return (
     <div className="modal-overlay" onClick={onClose}>
