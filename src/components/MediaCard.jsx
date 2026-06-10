@@ -67,9 +67,10 @@ export default function MediaCard({ item, currentUser, onLikeToggle, onDelete, o
   };
 
   const formatDate = (ts) => {
-    return new Date(ts).toLocaleDateString('en-GB', {
-      day: 'numeric', month: 'long', year: 'numeric',
-    });
+    const d = new Date(ts);
+    const dateStr = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    const timeStr = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    return `${dateStr} · ${timeStr}`;
   };
 
   const isVideo = item.file_type === 'video';
