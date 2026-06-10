@@ -12,7 +12,7 @@ const FILTERS = [
   { id: 'rahim', label: 'By Rahim' },
 ];
 
-export default function Home({ currentUser }) {
+export default function Home({ currentUser, onOpenProfile }) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
@@ -174,6 +174,7 @@ export default function Home({ currentUser }) {
                     key={item.id}
                     item={item}
                     currentUser={currentUser}
+                    onOpenProfile={onOpenProfile}
                     onDelete={handleDelete}
                   />
                 ))}

@@ -11,6 +11,7 @@ export default function DetailModal({
   onCommentsChange,
   onClose,
   onDelete,
+  onOpenProfile,
 }) {
   const [fullscreen, setFullscreen] = useState(false);
   const [heartAnim, setHeartAnim] = useState(false);
@@ -140,9 +141,15 @@ export default function DetailModal({
                     {(() => {
                       const uploader = item.uploader || '';
                       const l = uploader.toLowerCase();
-                      const avatarUrl = l === 'rugiatu' ? '/rugiatu.JPG' : l === 'rahim' ? '/rahim.JPG' : null;
+                      // prefer stored avatar url in localStorage
+                      let avatarUrl = null;
+                      try {
+                        const local = localStorage.getItem(`avatar_${l}`);
+                        if (local) avatarUrl = local;
+                      } catch (e) {}
+                      if (!avatarUrl) avatarUrl = l === 'rugiatu' ? '/rugiatu.JPG' : l === 'rahim' ? '/rahim.JPG' : null;
                       return avatarUrl ? (
-                        <img src={avatarUrl} alt={uploader} style={{ width: 36, height: 36, borderRadius: '50%', objectFit: 'cover' }} />
+                        <img src={avatarUrl} alt={uploader} style={{ width: 36, height: 36, borderRadius: '50%', objectFit: 'cover', cursor: onOpenProfile ? 'pointer' : 'default' }} onClick={() => onOpenProfile && onOpenProfile(uploader)} />
                       ) : (
                         <span className="uploader-dot" style={{ background: item.uploader === currentUser ? '#DCAE96' : '#FFD29D' }} />
                       );
@@ -226,6 +233,7 @@ export default function DetailModal({
                   initialComments={comments}
                   defaultOpen={true}
                   onCommentsChange={onCommentsChange}
+                  onOpenProfile={onOpenProfile}
                 />
               </div>
             </div>

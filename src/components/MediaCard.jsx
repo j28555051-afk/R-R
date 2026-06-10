@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import DetailModal from './DetailModal';
 
-export default function MediaCard({ item, currentUser, onLikeToggle, onDelete }) {
+export default function MediaCard({ item, currentUser, onLikeToggle, onDelete, onOpenProfile }) {
   const initialLikes = item.interactions ? item.interactions.filter((i) => i.interaction_type === 'like') : [];
 
   const [liked, setLiked] = useState(initialLikes.some((i) => i.user_name === currentUser));
@@ -74,7 +74,17 @@ export default function MediaCard({ item, currentUser, onLikeToggle, onDelete })
 
   const isVideo = item.file_type === 'video';
   const isNote = item.file_type === 'note';
-  const uploaderAvatar = ((item.uploader || '').toLowerCase() === 'rugiatu') ? '/rugiatu.JPG' : ((item.uploader || '').toLowerCase() === 'rahim') ? '/rahim.JPG' : null;
+  const uploaderAvatar = (() => {
+    const u = (item.uploader || '').toLowerCase();
+    // prefer localStorage-stored avatar if available
+    try {
+      if (typeof window !== 'undefined') {
+        const local = localStorage.getItem(`avatar_${u}`);
+        if (local) return local;
+      }
+    } catch (e) {}
+    return u === 'rugiatu' ? '/rugiatu.JPG' : u === 'rahim' ? '/rahim.JPG' : null;
+  })();
 
   return (
     <>
@@ -121,11 +131,11 @@ export default function MediaCard({ item, currentUser, onLikeToggle, onDelete })
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span className="uploader-tag" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               {uploaderAvatar ? (
-                <img src={uploaderAvatar} alt={item.uploader} style={{ width: 30, height: 30, borderRadius: '50%', objectFit: 'cover' }} />
+                <img src={uploaderAvatar} alt={item.uploader} style={{ width: 30, height: 30, borderRadius: '50%', objectFit: 'cover', cursor: onOpenProfile ? 'pointer' : 'default' }} onClick={(e) => { e.stopPropagation(); onOpenProfile && onOpenProfile(item.uploader); }} />
               ) : (
                 <span className="uploader-dot" style={{ background: item.uploader === currentUser ? '#DCAE96' : '#FFD29D' }} />
               )}
-              {item.uploader === currentUser ? 'You' : item.uploader}
+              <span style={{ cursor: onOpenProfile ? 'pointer' : 'default' }} onClick={(e) => { e.stopPropagation(); onOpenProfile && onOpenProfile(item.uploader); }}>{item.uploader === currentUser ? 'You' : item.uploader}</span>
             </span>
             <span style={{ fontSize: '0.75rem', color: '#B08070' }}>{formatDate(item.created_at)}</span>
           </div>
@@ -214,6 +224,7 @@ export default function MediaCard({ item, currentUser, onLikeToggle, onDelete })
             setShowDetail(false);
             onDelete(id, url);
           }}
+          onOpenProfile={onOpenProfile}
         />
       )}
     </>

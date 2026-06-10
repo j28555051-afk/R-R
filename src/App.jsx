@@ -3,6 +3,7 @@ import './index.css';
 import PasswordGate from './components/PasswordGate';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
+import ProfileModal from './components/ProfileModal';
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(() => {
@@ -10,6 +11,7 @@ export default function App() {
     return (saved === 'Rahim' || saved === 'Rugiatu') ? saved : null;
   });
   const [activePage, setActivePage] = useState('home');
+  const [profileUser, setProfileUser] = useState(null);
 
   const handleLogin = (user) => {
     setCurrentUser(user);
@@ -33,9 +35,13 @@ export default function App() {
         currentUser={currentUser}
         activePage={activePage}
         setActivePage={setActivePage}
+        onOpenProfile={(u) => setProfileUser(u)}
       />
       <main>
         {renderPage()}
+        {profileUser && (
+          <ProfileModal username={profileUser} currentUser={currentUser} onClose={() => setProfileUser(null)} />
+        )}
       </main>
     </div>
   );

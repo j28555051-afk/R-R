@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 
-export default function CommentSection({ mediaId, currentUser, initialComments = [], defaultOpen = false, onCommentsChange }) {
+export default function CommentSection({ mediaId, currentUser, initialComments = [], defaultOpen = false, onCommentsChange, onOpenProfile }) {
   const [comments, setComments] = useState(initialComments);
   const [prevInitialComments, setPrevInitialComments] = useState(initialComments);
   const [text, setText] = useState('');
@@ -84,7 +84,7 @@ export default function CommentSection({ mediaId, currentUser, initialComments =
 
       {open && (
         <div style={{ marginTop: '12px', animation: 'fadeInUp 0.3s ease' }}>
-          {comments.length === 0 && (
+          {comments.length === 0 && ( 
             <p style={{ color: '#B08070', fontSize: '0.83rem', fontStyle: 'italic', marginBottom: '12px' }}>
               Be the first to leave a comment.
             </p>
@@ -109,7 +109,7 @@ export default function CommentSection({ mediaId, currentUser, initialComments =
                       ) : (
                         <span className="uploader-dot" style={{ background: c.user_name === currentUser ? '#DCAE96' : '#FFD29D', width: '8px', height: '8px' }} />
                       )}
-                      <span style={{ fontWeight: 700, fontSize: '0.82rem', color: '#A96A4E' }}>{c.user_name === currentUser ? 'You' : c.user_name}</span>
+                      <span style={{ fontWeight: 700, fontSize: '0.82rem', color: '#A96A4E', cursor: onOpenProfile ? 'pointer' : 'default' }} onClick={() => onOpenProfile && onOpenProfile(c.user_name)}>{c.user_name === currentUser ? 'You' : c.user_name}</span>
                     </div>
                     <span style={{ fontSize: '0.72rem', color: '#B08070' }}>{formatTime(c.created_at)}</span>
                   </div>

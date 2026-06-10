@@ -1,4 +1,4 @@
-export default function Navbar({ currentUser, activePage, setActivePage }) {
+export default function Navbar({ currentUser, activePage, setActivePage, onOpenProfile }) {
   return (
     <nav className="navbar">
       <div className="navbar-inner">
@@ -13,7 +13,7 @@ export default function Navbar({ currentUser, activePage, setActivePage }) {
         </button>
 
         {/* User badge */}
-        <div className="navbar-user-badge">
+        <div className="navbar-user-badge" style={{ cursor: onOpenProfile ? 'pointer' : 'default' }} onClick={() => onOpenProfile && onOpenProfile(currentUser)}>
           {(() => {
             const u = (currentUser || '').toLowerCase();
             const url = u === 'rugiatu' ? '/rugiatu.JPG' : u === 'rahim' ? '/rahim.JPG' : null;
