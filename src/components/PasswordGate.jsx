@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ProfileModal from './ProfileModal';
 
 const CORRECT_PASSWORD = 'memories2024';
 
@@ -22,6 +23,7 @@ export default function PasswordGate({ onLogin }) {
   const [error, setError] = useState('');
   const [shake, setShake] = useState(false);
   const [step, setStep] = useState('password'); // 'password' | 'select'
+  const [profileUser, setProfileUser] = useState(null);
 
   const handlePasswordSubmit = (e) => {
     e.preventDefault();
@@ -103,7 +105,7 @@ export default function PasswordGate({ onLogin }) {
                     className="user-select-btn"
                     style={{ background: u.gradient }}
                   >
-                    <span className="uploader-dot" style={{ background: u.dot, width: '14px', height: '14px', flexShrink: 0 }} />
+                    <img src={u.id === 'Rugiatu' ? '/rugiatu.JPG' : u.id === 'Rahim' ? '/rahim.JPG' : ''} alt={u.label} style={{ width: 40, height: 40, borderRadius: '50%', objectFit: 'cover', flexShrink: 0, cursor: 'pointer' }} onClick={(e) => { e.stopPropagation(); setProfileUser(u.id); }} />
                     <div style={{ textAlign: 'left' }}>
                       <div style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.1rem', color: '#3D2B1F', fontWeight: 600 }}>
                         {u.label}
@@ -121,6 +123,9 @@ export default function PasswordGate({ onLogin }) {
         <p style={{ color: '#B08070', fontSize: '0.75rem', marginTop: '24px' }}>
           Made with love, just for us.
         </p>
+        {profileUser && (
+          <ProfileModal username={profileUser} currentUser={null} onClose={() => setProfileUser(null)} />
+        )}
       </div>
     </div>
   );
