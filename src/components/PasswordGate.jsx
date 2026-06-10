@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ProfileModal from './ProfileModal';
+import { getAvatarUrl } from '../lib/avatar';
 
 const CORRECT_PASSWORD = 'memories2024';
 
@@ -105,7 +106,12 @@ export default function PasswordGate({ onLogin }) {
                     className="user-select-btn"
                     style={{ background: u.gradient }}
                   >
-                    <img src={u.id === 'Rugiatu' ? '/rugiatu.JPG' : u.id === 'Rahim' ? '/rahim.JPG' : ''} alt={u.label} style={{ width: 40, height: 40, borderRadius: '50%', objectFit: 'cover', flexShrink: 0, cursor: 'pointer' }} onClick={(e) => { e.stopPropagation(); setProfileUser(u.id); }} />
+                    {(() => {
+                      const local = getAvatarUrl(u.id);
+                      const fallback = u.id === 'Rugiatu' ? '/rugiatu.JPG' : u.id === 'Rahim' ? '/rahim.JPG' : '';
+                      const url = local || fallback;
+                      return <img src={url} alt={u.label} style={{ width: 40, height: 40, borderRadius: '50%', objectFit: 'cover', flexShrink: 0, cursor: 'pointer' }} onClick={(e) => { e.stopPropagation(); setProfileUser(u.id); }} />;
+                    })()}
                     <div style={{ textAlign: 'left' }}>
                       <div style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.1rem', color: '#3D2B1F', fontWeight: 600 }}>
                         {u.label}
