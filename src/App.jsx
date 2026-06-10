@@ -4,7 +4,7 @@ import PasswordGate from './components/PasswordGate';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import ProfileModal from './components/ProfileModal';
-import { supabase } from './lib/supabase';
+import { supabase, isSupabaseConfigured } from './lib/supabase';
 import { setAvatarUrl } from './lib/avatar';
 import { useEffect } from 'react';
 
@@ -20,6 +20,7 @@ export default function App() {
     if (!currentUser) return;
     (async () => {
       try {
+        if (!isSupabaseConfigured) return;
         const { data, error } = await supabase.from('user_profiles').select('avatar_url').eq('username', currentUser).single();
         if (!error && data && data.avatar_url) {
           setAvatarUrl(currentUser, data.avatar_url);

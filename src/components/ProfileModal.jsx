@@ -31,9 +31,15 @@ export default function ProfileModal({ username, currentUser, onClose }) {
       const publicUrl = data.publicUrl;
       // persist server-side (if table exists)
       try {
-        await supabase.from('user_profiles').upsert({ username, avatar_url: publicUrl });
+        if (isSupabaseConfigured) {
+          try {
+            await supabase.from('user_profiles').upsert({ username, avatar_url: publicUrl });
+          } catch (e) {
+            // ignore if table not present or upsert fails
+          }
+        }
       } catch (e) {
-        // ignore if table not present
+        // ignore
       }
       setAvatarUrl(username, publicUrl);
       setPreview(null);
