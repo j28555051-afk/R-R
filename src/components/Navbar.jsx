@@ -14,7 +14,11 @@ export default function Navbar({ currentUser, activePage, setActivePage }) {
 
         {/* User badge */}
         <div className="navbar-user-badge">
-          <span className="navbar-user-dot" />
+          {(() => {
+            const u = (currentUser || '').toLowerCase();
+            const url = u === 'rugiatu' ? '/rugiatu.JPG' : u === 'rahim' ? '/rahim.JPG' : null;
+            return url ? <img src={url} alt={currentUser} style={{ width: 20, height: 20, borderRadius: '50%', objectFit: 'cover', marginRight: 8 }} /> : <span className="navbar-user-dot" />;
+          })()}
           {currentUser}
         </div>
       </div>

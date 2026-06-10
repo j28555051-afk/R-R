@@ -74,7 +74,7 @@ export default function MediaCard({ item, currentUser, onLikeToggle, onDelete })
 
   const isVideo = item.file_type === 'video';
   const isNote = item.file_type === 'note';
-  const uploaderAvatar = ((item.uploader || '').toLowerCase() === 'rugiatu') ? '/avatars/rugiatu.jpg' : ((item.uploader || '').toLowerCase() === 'rahim') ? '/avatars/rahim.jpg' : null;
+  const uploaderAvatar = ((item.uploader || '').toLowerCase() === 'rugiatu') ? '/rugiatu.JPG' : ((item.uploader || '').toLowerCase() === 'rahim') ? '/rahim.JPG' : null;
 
   return (
     <>

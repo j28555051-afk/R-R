@@ -94,7 +94,7 @@ export default function CommentSection({ mediaId, currentUser, initialComments =
             {comments.map((c) => {
               const uname = c.user_name || '';
               const lower = uname.toLowerCase();
-              const avatarUrl = lower === 'rugiatu' ? '/avatars/rugiatu.jpg' : lower === 'rahim' ? '/avatars/rahim.jpg' : null;
+              const avatarUrl = lower === 'rugiatu' ? '/rugiatu.JPG' : lower === 'rahim' ? '/rahim.JPG' : null;
               return (
                 <div key={c.id} style={{
                   background: c.user_name === currentUser ? 'rgba(220,174,150,0.15)' : 'rgba(249,228,216,0.5)',

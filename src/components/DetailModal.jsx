@@ -140,7 +140,7 @@ export default function DetailModal({
                     {(() => {
                       const uploader = item.uploader || '';
                       const l = uploader.toLowerCase();
-                      const avatarUrl = l === 'rugiatu' ? '/avatars/rugiatu.jpg' : l === 'rahim' ? '/avatars/rahim.jpg' : null;
+                      const avatarUrl = l === 'rugiatu' ? '/rugiatu.JPG' : l === 'rahim' ? '/rahim.JPG' : null;
                       return avatarUrl ? (
                         <img src={avatarUrl} alt={uploader} style={{ width: 36, height: 36, borderRadius: '50%', objectFit: 'cover' }} />
                       ) : (
