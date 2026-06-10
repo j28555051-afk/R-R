@@ -1,3 +1,5 @@
+import { getAvatarUrl } from '../lib/avatar';
+
 export default function Navbar({ currentUser, activePage, setActivePage, onOpenProfile }) {
   return (
     <nav className="navbar">
