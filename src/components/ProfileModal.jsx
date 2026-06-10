@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { getAvatarUrl, setAvatarUrl } from '../lib/avatar';
 
 export default function ProfileModal({ username, currentUser, onClose }) {
@@ -51,6 +51,7 @@ export default function ProfileModal({ username, currentUser, onClose }) {
       const local = getAvatarUrl(username);
       if (local) return;
       try {
+        if (!isSupabaseConfigured) return;
         const { data, error } = await supabase.from('user_profiles').select('avatar_url').eq('username', username).single();
         if (!error && data && data.avatar_url) {
           setAvatarUrl(username, data.avatar_url);
