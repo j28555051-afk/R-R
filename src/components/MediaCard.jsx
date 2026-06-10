@@ -74,6 +74,7 @@ export default function MediaCard({ item, currentUser, onLikeToggle, onDelete })
 
   const isVideo = item.file_type === 'video';
   const isNote = item.file_type === 'note';
+  const uploaderAvatar = ((item.uploader || '').toLowerCase() === 'rugiatu') ? '/avatars/rugiatu.jpg' : ((item.uploader || '').toLowerCase() === 'rahim') ? '/avatars/rahim.jpg' : null;
 
   return (
     <>
@@ -118,8 +119,12 @@ export default function MediaCard({ item, currentUser, onLikeToggle, onDelete })
         <div style={{ padding: '16px 18px', flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {/* Uploader + date */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span className="uploader-tag">
-              <span className="uploader-dot" style={{ background: item.uploader === currentUser ? '#DCAE96' : '#FFD29D' }} />
+            <span className="uploader-tag" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {uploaderAvatar ? (
+                <img src={uploaderAvatar} alt={item.uploader} style={{ width: 30, height: 30, borderRadius: '50%', objectFit: 'cover' }} />
+              ) : (
+                <span className="uploader-dot" style={{ background: item.uploader === currentUser ? '#DCAE96' : '#FFD29D' }} />
+              )}
               {item.uploader === currentUser ? 'You' : item.uploader}
             </span>
             <span style={{ fontSize: '0.75rem', color: '#B08070' }}>{formatDate(item.created_at)}</span>

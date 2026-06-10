@@ -91,23 +91,32 @@ export default function CommentSection({ mediaId, currentUser, initialComments =
           )}
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '14px' }}>
-            {comments.map((c) => (
-              <div key={c.id} style={{
-                background: c.user_name === currentUser ? 'rgba(220,174,150,0.15)' : 'rgba(249,228,216,0.5)',
-                borderRadius: '12px',
-                padding: '10px 14px',
-                borderLeft: `3px solid ${c.user_name === currentUser ? '#DCAE96' : '#F2C5A8'}`,
-              }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px', alignItems: 'center' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span className="uploader-dot" style={{ background: c.user_name === currentUser ? '#DCAE96' : '#FFD29D', width: '8px', height: '8px' }} />
-                    <span style={{ fontWeight: 700, fontSize: '0.82rem', color: '#A96A4E' }}>{c.user_name === currentUser ? 'You' : c.user_name}</span>
+            {comments.map((c) => {
+              const uname = c.user_name || '';
+              const lower = uname.toLowerCase();
+              const avatarUrl = lower === 'rugiatu' ? '/avatars/rugiatu.jpg' : lower === 'rahim' ? '/avatars/rahim.jpg' : null;
+              return (
+                <div key={c.id} style={{
+                  background: c.user_name === currentUser ? 'rgba(220,174,150,0.15)' : 'rgba(249,228,216,0.5)',
+                  borderRadius: '12px',
+                  padding: '10px 14px',
+                  borderLeft: `3px solid ${c.user_name === currentUser ? '#DCAE96' : '#F2C5A8'}`,
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      {avatarUrl ? (
+                        <img src={avatarUrl} alt={uname} style={{ width: 28, height: 28, borderRadius: '50%', objectFit: 'cover' }} />
+                      ) : (
+                        <span className="uploader-dot" style={{ background: c.user_name === currentUser ? '#DCAE96' : '#FFD29D', width: '8px', height: '8px' }} />
+                      )}
+                      <span style={{ fontWeight: 700, fontSize: '0.82rem', color: '#A96A4E' }}>{c.user_name === currentUser ? 'You' : c.user_name}</span>
+                    </div>
+                    <span style={{ fontSize: '0.72rem', color: '#B08070' }}>{formatTime(c.created_at)}</span>
                   </div>
-                  <span style={{ fontSize: '0.72rem', color: '#B08070' }}>{formatTime(c.created_at)}</span>
+                  <p style={{ fontSize: '0.88rem', color: '#3D2B1F', lineHeight: 1.5 }}>{c.comment_text}</p>
                 </div>
-                <p style={{ fontSize: '0.88rem', color: '#3D2B1F', lineHeight: 1.5 }}>{c.comment_text}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '8px' }}>
